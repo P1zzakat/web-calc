@@ -5,9 +5,10 @@ const calcButton = document.querySelector(".calc-operator");
 const numberButtonsArray = [...document.querySelectorAll(".number")];
 const operatorButtonsArray = [...document.querySelectorAll(".operator")];
 
-let curretNum;
+let currentNum;
 let nextNum;
 let operator;
+let fake = false;
 
 const operators = ["/", "*", "-", "+"];
 const nonStartingChars = [".", ...operators];
@@ -34,15 +35,10 @@ function multiply(a, b) {
 function divide(a, b) {
     if (b === 0) {
         alert("Can't divide by 0!");
+        clear();
         return;
     }
     return (a / b).toFixed(3);
-}
-
-function operate() {
-    let nextNum = screen.textContent;
-    let result = operatorObject[operator](Number(currentNum), Number(nextNum));
-    setScreenText(result);
 }
 
 function setScreenText(str) {
@@ -54,6 +50,8 @@ function addScreenText(str) {
 }
 
 function clear() {
+    currentNum = null;
+    nextNum = null;
     screen.textContent = "";
 }
 
@@ -61,7 +59,19 @@ function del() {
     screen.textContent = screen.textContent.slice(0, -1);
 }
 
+function operate() {
+    fake = false;
+    nextNum = screen.textContent;
+    currentNum = operatorObject[operator](Number(currentNum), Number(nextNum));
+    setScreenText(currentNum);
+    currentNum = null;
+}
+
 function handleNumberButton(event) {
+    if(fake) {
+        fake = false;
+        setScreenText('');
+    }
     const str = event.target.textContent;
     const screenText = screen.textContent;
     if (!(str === "." && (screenText.includes(".") || !screenText)))
@@ -69,10 +79,15 @@ function handleNumberButton(event) {
 }
 
 function handleOperatorButton(event) {
+    if (operator && !screen.textContent) return;
     if (!screen.textContent) return;
+    if (currentNum) {
+        operate();
+        fake = true
+    }
     currentNum = screen.textContent;
     operator = event.target.textContent;
-    clear();
+    if (!fake) setScreenText('');
 }
 
 clearButton.addEventListener("click", clear);
