@@ -60,6 +60,7 @@ function del() {
 }
 
 function operate() {
+    if (!currentNum || !operator) return;
     fake = false;
     nextNum = screen.textContent;
     currentNum = operatorObject[operator](Number(currentNum), Number(nextNum));
@@ -72,7 +73,7 @@ function handleNumberButton(event) {
         fake = false;
         setScreenText('');
     }
-    const str = event.target.textContent;
+    const str = event;
     const screenText = screen.textContent;
     if (!(str === "." && (screenText.includes(".") || !screenText)))
         addScreenText(str);
@@ -86,7 +87,7 @@ function handleOperatorButton(event) {
         fake = true
     }
     currentNum = screen.textContent;
-    operator = event.target.textContent;
+    operator = event;
     if (!fake) setScreenText('');
 }
 
@@ -95,9 +96,19 @@ deleteButton.addEventListener("click", del);
 calcButton.addEventListener("click", operate);
 
 for (numberButton of numberButtonsArray) {
-    numberButton.addEventListener("click", handleNumberButton);
+    numberButton.addEventListener("click", (e) => handleNumberButton(e.target.textContent));
 }
 
 for (operatorButton of operatorButtonsArray) {
-    operatorButton.addEventListener("click", handleOperatorButton);
+    operatorButton.addEventListener("click", (e) => handleOperatorButton(e.target.textContent));
 }
+
+// Keyboard support
+
+document.addEventListener('keydown', (event) => {
+    if (Number.isInteger(parseInt(event.key)) || event.key === '.') handleNumberButton(event.key);
+    if (operators.includes(event.key)) handleOperatorButton(event.key);
+    if (event.key === 'Backspace' && event.shiftKey) clear();
+    if (event.key === 'Backspace') del();
+    if (event.key === 'Enter') operate();
+});
