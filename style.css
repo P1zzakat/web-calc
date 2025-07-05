@@ -28,6 +28,8 @@ body {
     background-color: #1B2021;
 
     box-shadow: 0 0 4rem #ecebf323;
+
+    border-radius: 4rem;
 }
 
 .screen {
@@ -49,6 +51,8 @@ body {
     border: 1px solid black;
 
     min-width: 15ch;
+
+    border-radius: 4rem;
 }
 
 .buttons {
@@ -89,6 +93,12 @@ button {
     color: white;
     border: 1px solid black;
     border-radius: 4rem;
+
+    transition: all 0.5s ease;
+}
+
+button:hover {
+    box-shadow: inset 0 0 4px black
 }
 
 button:not(.clear, .del, .number-0, .number) {
