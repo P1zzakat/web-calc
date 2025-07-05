@@ -3,33 +3,51 @@
     padding: 0;
     box-sizing: border-box;
 
-    font-family: 'Inter', 'Poppins', 'Arial';
+    font-family: "Inter", "Poppins", "Arial";
     font-size: 1.2rem;
-
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
     height: 100vh;
 
     background-color: black;
 }
 
+.header {
+    background-color: #1b2021;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+
+    padding: 2rem 0;
+    margin-bottom: 3rem;
+
+    border-radius: 0 0 4rem 4rem;
+
+    box-shadow: 0 0 4rem #ecebf323;
+}
+
+.header a {
+    text-decoration: none;
+    color: white;
+}
+
 .calculator {
     display: flex;
     flex-direction: column;
-
+    align-items: center;
 
     padding: 2rem;
 
-    background-color: #1B2021;
+    background-color: #1b2021;
 
     box-shadow: 0 0 4rem #ecebf323;
 
     border-radius: 4rem;
+    min-width: fit-content;
+    max-width: 400px;
+
+    margin: auto;
 }
 
 .screen {
@@ -42,7 +60,7 @@ body {
 
     font-size: 1.8rem;
 
-    background-color: #ECEBF3;
+    background-color: #ecebf3;
 
     height: clamp(100px, 10vh, 200px);
 
@@ -59,25 +77,17 @@ body {
     display: flex;
 }
 
-.buttons>.buttons-left {
-    flex: 3;
-}
-
-.buttons>.operators {
-    flex: 1;
-}
-
 .buttons-left {
     display: flex;
     flex-direction: column;
 }
 
-.buttons-left>* {
+.buttons-left > * {
     display: flex;
     flex: 1;
 }
 
-.buttons-left>*>*{
+.buttons-left > * > * {
     flex: 1;
 }
 
@@ -87,7 +97,7 @@ body {
 }
 
 button {
-    background-color: #ECEBF3;
+    background-color: #ecebf3;
     border: none;
     cursor: pointer;
     color: white;
@@ -98,12 +108,12 @@ button {
 }
 
 button:hover {
-    box-shadow: inset 0 0 4px black
+    box-shadow: inset 0 0 4px black;
 }
 
-button:not(.clear, .del, .number-0, .number) {
+button:not(.clear, .del, .number-0, .number-dot) {
     aspect-ratio: 1 / 1;
-
+    width: 70px;
 }
 
 button.clear {
@@ -112,7 +122,8 @@ button.clear {
     align-items: center;
 }
 
-button.operator, button.calc-operator {
+button.operator,
+button.calc-operator {
     background-color: #d65757ef;
 }
 
